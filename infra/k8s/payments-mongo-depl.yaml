@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments-mongo
+  template:
+    metadata:
+      labels:
+        app: payments-mongo
+    spec:
+      containers:
+        - name: payments-mongo
+          image: mongo # this image comes from the docker hub
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-mongo-srv
+spec:
+  selector:
+    app: payments-mongo # it tells which pod it is going to govern its access to
+  ports:
+    - name: db # the name is not super important
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+# By default, mongoDB listens for incoming traffic on 27017. This information will normally be
+# given along with details of the image itself. The docker hub page will provide this information.

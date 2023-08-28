@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: wwbdocker123/auth
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY # name of the new environment variable inside of the container auth
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret # mame of the secret object
+                  key: JWT_KEY # key of the key/value pair
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-srvc
+spec:
+  selector:
+    app: auth
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
