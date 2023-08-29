@@ -8,7 +8,7 @@ import { PaymentCreatedListener } from './events/listener/payment-created-listen
 
 const start = async () => {
   console.log(
-    'A new line added to see the tests run at while updating the pull request'
+    'A new line added to see the tests run at while updating the pull request.'
   );
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
