@@ -1,0 +1,11 @@
+name: tests-tickets
+
+on:
+  pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # the container
+    steps:
+      - uses: actions/checkout@v2 # take all the codes of the project
+      - run: cd tickets && npm install && npm run test:ci
