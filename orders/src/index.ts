@@ -7,9 +7,7 @@ import { ExpirationCompleteListener } from './events/listener/expiration-complet
 import { PaymentCreatedListener } from './events/listener/payment-created-listener';
 
 const start = async () => {
-  console.log(
-    'A new line added to see the tests run at while updating the pull request.'
-  );
+  console.log('Now the tests are restricted with respecyt to the changes.');
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
