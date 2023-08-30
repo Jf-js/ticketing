@@ -3,7 +3,7 @@ name: deploy-auth.yaml
 on:
   push:
     branches:
-      -  main
+      -  master
     paths:
       - 'auth/**'
 jobs:
