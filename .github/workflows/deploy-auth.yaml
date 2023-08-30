@@ -6,7 +6,7 @@ on:
       -  main
     paths:
       - 'auth/**'
-job:
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
