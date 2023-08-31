@@ -38,7 +38,7 @@ spec:
                 name: orders-srvc
                 port:
                   number: 3000
-          - path: /?(.*) # this is a catch all block, should be placed at the last.
+          - path: /?(.*) # this is a catch all block, should be placed at the last
             pathType: Prefix
             backend:
               service:
