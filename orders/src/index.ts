@@ -7,7 +7,7 @@ import { ExpirationCompleteListener } from './events/listener/expiration-complet
 import { PaymentCreatedListener } from './events/listener/payment-created-listener';
 
 const start = async () => {
-  console.log('Now the tests are restricted with respecyt to the changes.');
+  console.log('Starting......');
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
