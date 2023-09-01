@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: ticketing.dev
+    - host: www.test1wedothebest.lat
       http:
         paths:
           - path: /api/users/?(.*)
@@ -24,7 +24,39 @@ spec:
                 name: payments-srvc
                 port:
                   number: 3000
-          - path: /api/tickets/?(.*)
+          - path: /api/tickets/?(.*)---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: 'true'
+    service.beta.kubernetes.io/do-loadbalancer-hostname: 'www.test1wedothebest.lat'
+  labels:
+    helm.sh/chart: ingress-nginx-2.0.3
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/version: 0.32.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: controller
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/component: controller
+
             pathType: Prefix
             backend:
               service:
@@ -45,3 +77,5 @@ spec:
                 name: client-srvc
                 port:
                   number: 3000
+
+
