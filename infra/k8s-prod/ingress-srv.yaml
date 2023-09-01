@@ -24,7 +24,28 @@ spec:
                 name: payments-srvc
                 port:
                   number: 3000
-          - path: /api/tickets/?(.*)---
+          - path: /api/tickets/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: tickets-srvc
+                port:
+                  number: 3000
+          - path: /api/orders/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: orders-srvc
+                port:
+                  number: 3000
+          - path: /?(.*) # this is a catch all block, should be placed at the last.
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srvc
+                port:
+                  number: 3000
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -56,26 +77,3 @@ spec:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/component: controller
-
-            pathType: Prefix
-            backend:
-              service:
-                name: tickets-srvc
-                port:
-                  number: 3000
-          - path: /api/orders/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: orders-srvc
-                port:
-                  number: 3000
-          - path: /?(.*) # this is a catch all block, should be placed at the last
-            pathType: Prefix
-            backend:
-              service:
-                name: client-srvc
-                port:
-                  number: 3000
-
-
