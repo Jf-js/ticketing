@@ -1,25 +1,25 @@
-name: deploy-auth
+name: deploy-orders
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'auth/**'
+      - 'orders/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd auth && docker build -t wwbdocker123/auth .
+      - run: cd orders && docker build -t wwbdocker123/orders .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push wwbdocker123/auth
+      - run: docker push wwbdocker123/orders
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save ticketing
-      - run: kubectl rollout restart deployment auth-depl
+      - run: kubectl rollout restart deployment orders-depl
